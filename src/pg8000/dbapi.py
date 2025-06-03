@@ -7,7 +7,7 @@ from itertools import count, islice
 from time import localtime
 from warnings import warn
 
-from pg8000.converters import (
+from src.pg8000.converters import (
     BIGINT,
     BOOLEAN,
     BOOLEAN_ARRAY,
@@ -45,15 +45,15 @@ from pg8000.converters import (
     VARCHAR_ARRAY,
     XID,
 )
-from pg8000.core import (
+from src.pg8000.core import (
     Context,
     CoreConnection,
     IN_FAILED_TRANSACTION,
     IN_TRANSACTION,
     ver,
 )
-from pg8000.exceptions import DatabaseError, Error, InterfaceError
-from pg8000.types import Range
+from src.pg8000.exceptions import DatabaseError, Error, InterfaceError
+from src.pg8000.types import Range
 
 
 __version__ = ver
@@ -227,24 +227,7 @@ def connect(
     )
 
 
-apilevel = "2.0"
-"""The DBAPI level supported, currently "2.0".
 
-This property is part of the `DBAPI 2.0 specification
-<http://www.python.org/dev/peps/pep-0249/>`_.
-"""
-
-threadsafety = 1
-"""Integer constant stating the level of thread safety the DBAPI interface
-supports. This DBAPI module supports sharing of the module only. Connections
-and cursors my not be shared between threads. This gives pg8000 a threadsafety
-value of 1.
-
-This property is part of the `DBAPI 2.0 specification
-<http://www.python.org/dev/peps/pep-0249/>`_.
-"""
-
-paramstyle = "format"
 
 
 def convert_paramstyle(style, query, args):
@@ -498,7 +481,7 @@ class Cursor:
 
         :param operation:
             The SQL statement to execute
-        :param parameter_sets:
+        :param param_sets:
             A sequence of parameters to execute the statement with. The values
             in the sequence should be sequences or mappings of parameters, the
             same as the args argument of the :meth:`execute` method.
@@ -579,7 +562,7 @@ class Cursor:
             else:
                 raise e
 
-    def fetchmany(self, num=None):
+    def fetchmany(self, size=None):
         """Fetches the next set of rows of a query result.
 
         This method is part of the `DBAPI 2.0 specification
@@ -597,7 +580,7 @@ class Cursor:
             will be returned.
         """
         try:
-            return tuple(islice(self, self.arraysize if num is None else num))
+            return tuple(islice(self, self.arraysize if size is None else size))
         except TypeError:
             raise ProgrammingError("attempting to use unexecuted cursor")
 

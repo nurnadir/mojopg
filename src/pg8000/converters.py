@@ -20,8 +20,8 @@ from uuid import UUID
 
 from dateutil.parser import ParserError, parse
 
-from pg8000.exceptions import InterfaceError
-from pg8000.types import PGInterval, Range
+from src.pg8000.exceptions import InterfaceError
+from src.pg8000.types import PGInterval, Range
 
 
 ANY_ARRAY = 2277

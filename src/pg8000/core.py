@@ -9,14 +9,14 @@ from struct import Struct
 
 import scramp
 
-from pg8000.converters import (
+from src.pg8000.converters import (
     PG_PY_ENCODINGS,
     PG_TYPES,
     PY_TYPES,
     make_params,
     string_in,
 )
-from pg8000.exceptions import DatabaseError, InterfaceError
+from src.pg8000.exceptions import DatabaseError, InterfaceError
 
 
 ver = version("pg8000")
